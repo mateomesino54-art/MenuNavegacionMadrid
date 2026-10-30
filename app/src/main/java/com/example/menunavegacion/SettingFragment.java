@@ -22,14 +22,14 @@ public class SettingFragment extends Fragment {
         TextView tvUsuarioLogueado = view.findViewById(R.id.tvUsuarioLogueado);
         Button btnCerrarSesion = view.findViewById(R.id.btnCerrarSesion);
 
+        String usuario = "Invitado";
         if (getArguments() != null) {
-            String usuario = getArguments().getString("CLAVE_USUARIO", "Invitado");
-            tvUsuarioLogueado.setText("Usuario logueado:\n" + usuario.toUpperCase());
+            usuario = getArguments().getString("CLAVE_USUARIO", "Invitado");
         }
+        tvUsuarioLogueado.setText("Usuario logueado:\n" + usuario.toUpperCase());
 
-        // Botón para cerrar sesión y regresar al Login
         btnCerrarSesion.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            Intent intent = new Intent(requireContext(), LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });

@@ -32,9 +32,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.tvTitulo.setText(item.getTitulo());
         holder.tvDescripcion.setText(item.getDescripcion());
 
-        // Cargar imagen usando la librería Picasso solicitada
         Picasso.with(holder.itemView.getContext())
                 .load(item.getImagenResId())
+                .fit()
+                .centerCrop()
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_menu_report_image)
                 .into(holder.ivImagen);

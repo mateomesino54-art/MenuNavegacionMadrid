@@ -9,12 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String USUARIO_VALIDO = "mateo";
+    private static final String PASSWORD_VALIDO = "12345678";
+
     private EditText etUsuario, etPassword;
     private Button btnLogin;
-
-    // CREDENCIALES VÁLIDAS - ¡IMPORTANTE CAMBIAR "MAURICIO" POR TU NOMBRE!
-    private final String USUARIO_VALIDO = "mateo";
-    private final String PASSWORD_VALIDO = "12345678";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +28,16 @@ public class LoginActivity extends AppCompatActivity {
             String user = etUsuario.getText().toString().trim();
             String pass = etPassword.getText().toString().trim();
 
-            // Validación de campos vacíos
             if (user.isEmpty() || pass.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Validación de credenciales
-            if (user.equals(USUARIO_VALIDO) && pass.equals(PASSWORD_VALIDO)) {
+            if (user.equalsIgnoreCase(USUARIO_VALIDO) && pass.equals(PASSWORD_VALIDO)) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("USUARIO_LOGUEADO", user);
                 startActivity(intent);
-                finish(); // Cerramos el login para que no se pueda volver
+                finish();
             } else {
                 Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
             }

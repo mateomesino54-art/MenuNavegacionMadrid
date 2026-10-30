@@ -20,7 +20,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Título con color morado del Real Madrid -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +48,6 @@
                 android:paddingHorizontal="12dp"
                 android:layout_marginBottom="24dp"/>
 
-            <!-- Botón con color azul del Real Madrid -->
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"

@@ -7,49 +7,46 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String usuarioRecibido;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usuarioRecibido = getIntent().getStringExtra("USUARIO_LOGUEADO");
-        if (usuarioRecibido == null) {
-            usuarioRecibido = "Invitado";
+        String usuarioTemp = getIntent().getStringExtra("USUARIO_LOGUEADO");
+        if (usuarioTemp == null) {
+            usuarioTemp = "Invitado";
         }
+        final String usuarioLogueado = usuarioTemp;
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         if (savedInstanceState == null) {
-            cargarFragment(new HomeFragment());
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new HomeFragment())
+                    .commit();
         }
 
         bottomNav.setOnItemSelectedListener(item -> {
-            Fragment fragmentSeleccionado = null;
-            int id = item.getItemId();
+            Fragment selectedFragment = null;
+            int itemId = item.getItemId();
 
-            if (id == R.id.nav_home) {
-                fragmentSeleccionado = new HomeFragment();
-            } else if (id == R.id.nav_user) {
-                fragmentSeleccionado = new SettingFragment();
-                Bundle args = new Bundle();
-                args.putString("CLAVE_USUARIO", usuarioRecibido);
-                fragmentSeleccionado.setArguments(args);
+            if (itemId == R.id.nav_home) {
+                selectedFragment = new HomeFragment();
+            } else if (itemId == R.id.nav_user) {
+                SettingFragment settingFragment = new SettingFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("CLAVE_USUARIO", usuarioLogueado);
+                settingFragment.setArguments(bundle);
+                selectedFragment = settingFragment;
             }
 
-            if (fragmentSeleccionado != null) {
-                cargarFragment(fragmentSeleccionado);
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .commit();
                 return true;
             }
             return false;
         });
-    }
-
-    private void cargarFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
     }
 }
